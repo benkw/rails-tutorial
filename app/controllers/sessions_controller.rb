@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password]) # any other object besides nil and false is true
       log_in user
+      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       redirect_to user # rails automatically converts this to the route for user profile page user_url(user)
     else
       # flash an error msg
@@ -17,7 +18,7 @@ class SessionsController < ApplicationController
   end
   
   def destroy
-    log_out
+    log_out if is_logged_in?
     redirect_to root_url
   end
   
