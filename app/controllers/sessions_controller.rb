@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password]) # any other object besides nil and false is true
       log_in user
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      redirect_to user # rails automatically converts this to the route for user profile page user_url(user)
+      redirect_back_or user # sessions_helper method for friendly forwarding # rails automatically converts this to the route for user profile page user_url(user)
     else
       # flash an error msg
       flash.now[:danger] = 'Invalid email/password combination. Please try again!'
