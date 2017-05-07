@@ -4,10 +4,8 @@
 <%= will_paginate %>
 
 <ul class="users">
-  <% @users.each do |user| %>
-    <%= render @users %> <%# not a render on a string with name of a partial %>
-    <%# actually calling render on a user variable of class User %>
-  <% end %>
+  <%= render @users %> <%# not a render on a string with name of a partial %>
+  <%# actually calling render on a user variable of class User %>
 </ul>
 
 <%= will_paginate %>
