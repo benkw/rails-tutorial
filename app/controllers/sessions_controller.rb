@@ -6,9 +6,16 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password]) # any other object besides nil and false is true
-      log_in user
-      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      redirect_back_or user # sessions_helper method for friendly forwarding # rails automatically converts this to the route for user profile page user_url(user)
+      if user.activated?
+        log_in user
+        params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+        redirect_back_or user # sessions_helper method for friendly forwarding # rails automatically converts this to the route for user profile page user_url(user)
+      else
+        message = "Account not activated. "
+        message += "CHeck your email for the activation link."
+        flash[:warning] = message
+        redirect_to root_url
+      end
     else
       # flash an error msg
       flash.now[:danger] = 'Invalid email/password combination. Please try again!'
