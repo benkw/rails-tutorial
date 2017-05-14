@@ -30,7 +30,9 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
                                          password:              "password",
                                          password_confirmation: "password" } }
     end
+    # verifies that exactly 1 message was deliveried
     assert_equal 1, ActionMailer::Base.deliveries.size
+    # assigns lets us access instance variables in the corresponding action
     user = assigns(:user)
     assert_not user.activated?
     

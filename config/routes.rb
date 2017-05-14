@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'password_resets/new'
+
+  get 'password_resets/edit'
+
   get '/contact', to: 'static_pages#contact'
   get '/help',    to: 'static_pages#help', as: 'helf'
   get '/about',   to: 'static_pages#about'
@@ -13,6 +17,11 @@ Rails.application.routes.draw do
   
   resources :users
   resources :account_activations, only: [:edit]
+  resources :password_resets,     only: [:new, :create, :edit, :update]
+  # GET	    /password_resets/new	        new	    new_password_reset_path
+  # POST	  /password_resets	            create	password_resets_path
+  # GET	    /password_resets/<token>/edit	edit	  edit_password_reset_path(token)
+  # PATCH	  /password_resets/<token>	     update	password_reset_url(token)
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
