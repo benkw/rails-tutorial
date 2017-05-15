@@ -15,7 +15,13 @@ Rails.application.routes.draw do
   post '/login',    to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+      # /users/1/following
+      # /users/1/followers
+    end
+  end
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
   # GET	    /password_resets/new	        new	    new_password_reset_path
@@ -23,5 +29,5 @@ Rails.application.routes.draw do
   # GET	    /password_resets/<token>/edit	edit	  edit_password_reset_path(token)
   # PATCH	  /password_resets/<token>	     update	password_reset_url(token)
   resources :microposts,          only: [:create, :destroy]
-  
+  resources :relationships,       only: [:create, :destroy]
 end
