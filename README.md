@@ -41,3 +41,5 @@ For more information, see the
 [*Ruby on Rails Tutorial* book](http://www.railstutorial.org/book).
 
 ## Testing pushing to bitbucket and github
+git push              pushes to github
+git push bitbucket    pushes to bitbucket
