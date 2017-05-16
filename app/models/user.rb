@@ -83,7 +83,11 @@ class User < ApplicationRecord
   
   # defines a proto-feed
   def feed
-    Micropost.where("user_id = ?", id)
+    # following_ids method is made by Active Record based on the has_many :following association
+    following_ids = "SELECT followed_id FROM relationships
+                     WHERE  follower_id = :user_id"
+    Micropost.where("user_id IN (#{following_ids})
+                     OR user_id = :user_id", user_id: id)
   end
   
   # Follows a user.
